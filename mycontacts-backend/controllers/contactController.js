@@ -1,4 +1,5 @@
-// status 200 means everything is ok, 201 means created, 204 is when theres no response body
+// status 200 means request succeded, 201 means created, 204 is when theres no response body
+// status 400 Bad request Invalid input
 
 // @desc Get all contacts
 // @route GET /api/contacts
@@ -24,7 +25,12 @@ const getContact = (req, res)=>{
 const createContact = (req, res)=>{
     
     console.log(req.body);
-    
+    const {name, email, phone} = req.body;
+    if(!name || !email || !phone){
+        res.status(400);
+        throw new Error("All fields are mandatory!");
+    }
+
     res.status(201).json({       
         message: "Create Contact"
     });
@@ -42,7 +48,7 @@ const updateContact = (req, res)=>{
 // @desc Delete contact
 // @route DELETE /api/contacts/:id
 // @access public
-const deleteContact = (rep, res)=>{
+const deleteContact = (req, res)=>{
     res.status(200).json({
         message: `Delete contact for ${req.params.id}`
     });
