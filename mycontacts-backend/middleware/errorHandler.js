@@ -3,7 +3,6 @@ const {errors} = require("../errors");
 const errorHandler = (err,req,res,next)=>{
     const statusCode = res.statusCode? res.statusCode: 500;
     console.log(statusCode);
-    console.log(errors.VALIDATION_FAILED);
 
     switch(statusCode){
         case errors.VALIDATION_FAILED:
@@ -27,7 +26,8 @@ const errorHandler = (err,req,res,next)=>{
             break;
 
         default:
-            res.send("No Errors, we're good!");
+            res.send("Unknown Error");
+            console.log(err);
             break;
 
     } 
