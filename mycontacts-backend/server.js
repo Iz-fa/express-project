@@ -1,6 +1,11 @@
 const express = require("express");
+const connectDb = require("./config/dbConnection")
 const errorHandler = require("./middleware/errorHandler");
+const router = require("./routes/contactRoutes");
 const dotenv = require("dotenv").config();
+
+
+connectDb();
 
 const app = express();
 
@@ -17,7 +22,7 @@ app.get('/api/contacts', (req,res)=>{
 //this middleware from express is to parse the json data the client is sending back to the server 
 // (because the data is a string)
 app.use(express.json()); 
-app.use("/api/contacts", require("./routes/contactRoutes"));
+app.use("/api/contacts", router);
 
 // since errorHandler funciton has 4 params, this tells express
 // that this middleware is to handle the error that was thrown
