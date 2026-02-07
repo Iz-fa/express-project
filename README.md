@@ -11,7 +11,3 @@ A RESTful backend service for managing contact information.
 - CRUD operations for contacts
 - Input validation & centralized error handling
 - Modular controllers and routes
-
-## Getting Started
-npm install
-npm run dev
