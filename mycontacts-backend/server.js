@@ -24,7 +24,7 @@ app.get('/api/contacts', (req,res)=>{
 // (because the data is a string)
 app.use(express.json()); 
 app.use("/api/contacts", contactRouter);
-app.use("api/users", userRouter);
+app.use("/api/users", userRouter);
 
 // since errorHandler funciton has 4 params, this tells express
 // that this middleware is to handle the error that was thrown
