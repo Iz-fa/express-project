@@ -7,4 +7,19 @@ const registerUser = asyncHandler(async(req,res)=>{
    res.json({message:"Register the user"});
 });
 
-module.exports = registerUser;
+// @desc Login user
+// @route POST /api/users/login
+// @access public
+const loginUser = asyncHandler(async(req,res)=>{        
+   res.json({message:"Login the user"});
+});
+
+// @desc Current user info
+// @route GET /api/current
+// @access private
+const currentUser = asyncHandler(async(req,res)=>{        
+   res.json({message:"Current user info"});
+});
+
+
+module.exports = {registerUser, loginUser, currentUser};
