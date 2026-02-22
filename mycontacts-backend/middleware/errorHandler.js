@@ -2,7 +2,6 @@ const {errors} = require("../errors");
 
 const errorHandler = (err,req,res,next)=>{
     const statusCode = res.statusCode? res.statusCode: 500;
-    console.log(statusCode);
 
     switch(statusCode){
         case errors.VALIDATION_FAILED:

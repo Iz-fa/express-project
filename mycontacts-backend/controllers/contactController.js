@@ -11,7 +11,7 @@ const Contact = require("../models/contactModel");
 // @access private
 const getContacts = asyncHandler(async(req,res)=>{        //async because mongoDB uses promises
    
-    const contacts = await Contact.find();
+    const contacts = await Contact.find({user_id: req.user.id});
     res.status(200).json(contacts);
 });
 
@@ -20,9 +20,12 @@ const getContacts = asyncHandler(async(req,res)=>{        //async because mongoD
 // @access private
 const getContact = asyncHandler(async(req, res)=>{
 
-    const contact = await Contact.findById(req.params.id);
+    const contact = await Contact.find({
+        _id: req.params.id,
+        user_id: req.user.id
+    });
 
-    if(!contact){
+    if(!contact || contact.length==0){
         res.status(404);
         throw new Error("Contact not found");
     }
@@ -44,7 +47,8 @@ const createContact = asyncHandler(async(req, res)=>{
     const contact = await Contact.create({
         name: name,
         email: email,
-        phone: phone
+        phone: phone,
+        user_id: req.user.id
     });
     res.status(201).json(contact);
 });
@@ -53,10 +57,12 @@ const createContact = asyncHandler(async(req, res)=>{
 // @route PUT /api/contacts/:id
 // @access private
 const updateContact = asyncHandler(async(req, res)=>{
+    const oldContact = await Contact.find({
+        _id: req.params.id,
+        user_id: req.user.id
+    });
 
-    const oldContact = await Contact.findById(req.params.id);
-
-    if(!oldContact){
+    if(!oldContact || oldContact.length==0){
         res.status(404);
         throw new Error("Contact not found");
     }
@@ -65,8 +71,6 @@ const updateContact = asyncHandler(async(req, res)=>{
     const updatedContact = await Contact.findById(req.params.id);
 
     console.log("Old contact:", oldContact);
-    console.log("New contact:", updatedContact);
-
     res.status(200).json(updatedContact);
 });
 
@@ -75,14 +79,17 @@ const updateContact = asyncHandler(async(req, res)=>{
 // @access private
 const deleteContact = asyncHandler(async(req, res)=>{
 
-    const contact = await Contact.findById(req.params.id);
+    const contact = await Contact.find({
+        _id: req.params.id,
+        user_id: req.user.id
+    });
 
-    if(!contact){
+    if(!contact || contact.length == 0){
         res.status(404);
         throw new Error("Contact not found");
     }
     await Contact.findByIdAndDelete(req.params.id);
-    //Contact.remove() works the same
+    //Contact.deleteOne() works the same
 
     res.status(200).send(`Deleted contact: ${contact}`);
 });
