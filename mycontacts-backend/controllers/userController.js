@@ -66,11 +66,11 @@ const loginUser = asyncHandler(async(req,res)=>{
       // Secret of the jwt
       process.env.ACCESS_TOKEN_SECRET,
 
-      { expiresIn: '1m'}
+      { expiresIn: '10m'}
       );
 
       res.status(200).json({
-         message:`User ${req.body.username} is logged in`,
+         message:`User ${req.body.username||''} is logged in`,
          accessToken
       });
 
@@ -83,7 +83,7 @@ const loginUser = asyncHandler(async(req,res)=>{
 });
 
 // @desc Current user info
-// @route GET /api/current
+// @route GET /api/users/current
 // @access private
 const currentUser = asyncHandler(async(req,res)=>{        
    res.json({message:"Current user info"});
