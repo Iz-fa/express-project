@@ -3,11 +3,13 @@
 A RESTful backend service for managing contact information.
 
 ## Tech Stack
-- Node.js, Express
+- Node.js/Express
 - MongoDB, Mongoose
-- REST API
+
 
 ## Features
+- REST API
 - CRUD operations for contacts
+- JWT authentication
 - Input validation & centralized error handling
-- Modular controllers and routes
+
